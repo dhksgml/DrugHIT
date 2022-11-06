@@ -49,18 +49,19 @@ public class Player : MonoBehaviour
         isUpper = B;
     }
 
-    public void idle()
+    public void Idle()
     {
-        Debug.Log("idle..");
+        //Debug.Log("idle..");
         isUpper = false;
         isCrouch = false;
+        isBlock = false;
         state = State.idle;
     }
-    public void walk_back(int PlayerNum)
+    public void WalkBack(int PlayerNum)
     {
         if (!isAtk || !isBlock)
         {
-            Debug.Log("walk_back..");
+            //Debug.Log("walk_back..");
             state = State.walk_back;
             
             //플레이어1
@@ -76,11 +77,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void walk_front(int PlayerNum)
+    public void WalkFront(int PlayerNum)
     {
         if (!isAtk || !isBlock)
         {
-            Debug.Log("walk_front..");
+            //Debug.Log("walk_front..");
 
             state = State.walk_front;
 
@@ -96,9 +97,9 @@ public class Player : MonoBehaviour
             }
         }
     }
-    public void highPunch()
+    public void HighPunch()
     {
-        Debug.Log("highPunch..");
+        //Debug.Log("highPunch..");
         isAtk = true;
         if (state == State.hp_left)
         {
@@ -116,7 +117,7 @@ public class Player : MonoBehaviour
 
     public void Punch()
     {
-        Debug.Log("Punch..");
+        //Debug.Log("Punch..");
         isAtk = true;
         if (state == State.bp_left)
         {
@@ -132,36 +133,36 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void highBlock()
+    public void HighBlock()
     {
-        Debug.Log("highBlock..");
+        //Debug.Log("highBlock..");
         state = State.hb_pose;
         isBlock = true;
         StopAllCoroutines();
         StartCoroutine(DoBlock());
     }
-    public void block()
+    public void Block()
     {
-        Debug.Log("block..");
+        //Debug.Log("block..");
         state = State.bb_pose;
         isBlock = true;
         StopAllCoroutines();
         StartCoroutine(DoBlock());
 
     }
-    public void lowBlock()
+    public void LowBlock()
     {
-        Debug.Log("lowBlock..");
+        //Debug.Log("lowBlock..");
         state = State.lb_pose;
         isBlock = true;
         StopAllCoroutines();
         StartCoroutine(DoBlock());
     }
 
-    public void highKick()
+    public void HighKick()
     {
 
-        Debug.Log("highKick..");
+        //Debug.Log("highKick..");
         isAtk = true;
         if (state == State.hk_left)
         {
@@ -176,9 +177,9 @@ public class Player : MonoBehaviour
             StartCoroutine(DoAttack());
         }
     }
-    public void kick()
+    public void Kick()
     {
-        Debug.Log("kick..");
+        //Debug.Log("kick..");
         isAtk = true;
         if (state == State.bk_left)
         {
@@ -193,9 +194,9 @@ public class Player : MonoBehaviour
             StartCoroutine(DoAttack());
         }
     }
-    public void lowKick()
+    public void LowKick()
     {
-        Debug.Log("lowKick..");
+        //Debug.Log("lowKick..");
         isAtk = true;
         if (state == State.lk_left)
         {
@@ -211,17 +212,23 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    public void Damaged()
+    {
+
+    }
+
     IEnumerator DoAttack()
     {
         yield return new WaitForSeconds(1f);
         isAtk = false;
-        this.idle();
+        this.Idle();
     }
 
     IEnumerator DoBlock()
     {
         yield return new WaitForSeconds(1f);
         isBlock = false;
-        this.idle();
+        this.Idle();
     }
 }
