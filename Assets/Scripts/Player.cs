@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
     //막기 입력 여부
     public bool isBlock = false;
 
+    public Animator animator;
+
+
     public bool GetCrouch()
     {
         return isCrouch;
@@ -56,6 +59,11 @@ public class Player : MonoBehaviour
         isCrouch = false;
         isBlock = false;
         state = State.idle;
+
+        //애니메이션
+        //animator.SetBool("walkBack", false);
+        //animator.SetBool("walkFront", false);
+        //animator.SetBool("idle", true);
     }
     public void WalkBack(int PlayerNum)
     {
@@ -63,9 +71,12 @@ public class Player : MonoBehaviour
         {
             //Debug.Log("walk_back..");
             state = State.walk_back;
-            
+            //애니메이션
+            animator.SetBool("idle", false);
+            animator.SetBool("walkBack", true);
+
             //플레이어1
-            if(PlayerNum == 0)
+            if (PlayerNum == 0)
             {
                 transform.position += new Vector3(-1, 0, 0) * speed * Time.deltaTime;
             }
@@ -84,6 +95,9 @@ public class Player : MonoBehaviour
             //Debug.Log("walk_front..");
 
             state = State.walk_front;
+            //애니메이션
+            animator.SetBool("idle", false);
+            animator.SetBool("walkFront", true);
 
             //플레이어1
             if (PlayerNum == 0)
@@ -104,12 +118,17 @@ public class Player : MonoBehaviour
         if (state == State.hp_left)
         {
             state = State.hp_right;
+            //애니메이션
+            animator.SetBool("leftAtk", true);
+            animator.SetBool("hPunch", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack());
         }
         else
         {
             state = State.hp_left;
+            //애니메이션
+            animator.SetBool("hPunch", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack());
         }
@@ -122,12 +141,17 @@ public class Player : MonoBehaviour
         if (state == State.bp_left)
         {
             state = State.bp_right;
+            //애니메이션
+            animator.SetBool("leftAtk", true);
+            animator.SetBool("bPunch", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack());
         }
         else
         {
             state = State.bp_left;
+            //애니메이션
+            animator.SetBool("bPunch", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack());
         }
@@ -136,16 +160,20 @@ public class Player : MonoBehaviour
     public void HighBlock()
     {
         //Debug.Log("highBlock..");
-        state = State.hb_pose;
         isBlock = true;
+        state = State.hb_pose;
+        //애니메이션
+        animator.SetBool("hBlock", true);
         StopAllCoroutines();
         StartCoroutine(DoBlock());
     }
     public void Block()
     {
         //Debug.Log("block..");
-        state = State.bb_pose;
         isBlock = true;
+        state = State.bb_pose;
+        //애니메이션
+        animator.SetBool("bBlock", true);
         StopAllCoroutines();
         StartCoroutine(DoBlock());
 
@@ -153,8 +181,10 @@ public class Player : MonoBehaviour
     public void LowBlock()
     {
         //Debug.Log("lowBlock..");
-        state = State.lb_pose;
         isBlock = true;
+        state = State.lb_pose;
+        //애니메이션
+        animator.SetBool("lBlock", true);
         StopAllCoroutines();
         StartCoroutine(DoBlock());
     }
@@ -167,12 +197,17 @@ public class Player : MonoBehaviour
         if (state == State.hk_left)
         {
             state = State.hk_right;
+            //애니메이션
+            animator.SetBool("leftAtk", true);
+            animator.SetBool("hKick", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack());
         }
         else
         {
             state = State.hk_left;
+            //애니메이션
+            animator.SetBool("hKick", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack());
         }
@@ -184,12 +219,17 @@ public class Player : MonoBehaviour
         if (state == State.bk_left)
         {
             state = State.bk_right;
+            //애니메이션
+            animator.SetBool("leftAtk", true);
+            animator.SetBool("bKick", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack());
         }
         else
         {
             state = State.bk_left;
+            //애니메이션
+            animator.SetBool("bKick", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack());
         }
@@ -201,12 +241,18 @@ public class Player : MonoBehaviour
         if (state == State.lk_left)
         {
             state = State.lk_right;
+            //애니메이션
+            animator.SetBool("leftAtk", true);
+            animator.SetBool("lKick", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack());
         }
         else
         {
             state = State.lk_left;
+            //애니메이션
+            animator.SetBool("leftAtk", true);
+            animator.SetBool("lKick", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack());
         }
@@ -231,4 +277,5 @@ public class Player : MonoBehaviour
         isBlock = false;
         this.Idle();
     }
+
 }

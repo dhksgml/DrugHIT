@@ -1073,11 +1073,11 @@ PrefabInstance:
     - target: {fileID: 95011978518554024, guid: 383c0a12e32514b09bc5645b904558e3, type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9000000, guid: fe3472b91f5844bed93534d1b064ae23, type: 3}
     - target: {fileID: 95011978518554024, guid: 383c0a12e32514b09bc5645b904558e3, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9100000, guid: 6df7fff785815b04f97ac1a2001685c7, type: 2}
     - target: {fileID: 95011978518554024, guid: 383c0a12e32514b09bc5645b904558e3, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
@@ -1105,23 +1105,7 @@ MonoBehaviour:
   state: 0
   isAtk: 0
   isBlock: 0
---- !u!114 &212067400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 212067398}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e405c7f3d0d52da4898c8b36e8aff94f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerState: 0
-  isAttack: 0
-  speed: 5
-  backWalkSpeed: -3
-  frontWalkSpeed: 5
+  animator: {fileID: 554705185}
 --- !u!136 &212067402
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2562,6 +2546,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520296127}
   m_CullTransparentMesh: 1
+--- !u!1 &554705183 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1440796592086510, guid: 383c0a12e32514b09bc5645b904558e3, type: 3}
+  m_PrefabInstance: {fileID: 212067397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &554705184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554705183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46a94741b4119c4192211c6da4c2eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 554705185}
+--- !u!95 &554705185 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95011978518554024, guid: 383c0a12e32514b09bc5645b904558e3, type: 3}
+  m_PrefabInstance: {fileID: 212067397}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &557557323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4131,8 +4138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46a94741b4119c4192211c6da4c2eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 804006126}
-  playerController: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!136 &771758631
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4328,11 +4334,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803856828}
   m_CullTransparentMesh: 1
---- !u!95 &804006126 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 95011978518554024, guid: 383c0a12e32514b09bc5645b904558e3, type: 3}
-  m_PrefabInstance: {fileID: 1887561104}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &804673482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7674,7 +7675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 95011978518554024, guid: 383c0a12e32514b09bc5645b904558e3, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 383c0a12e32514b09bc5645b904558e3, type: 3}
@@ -7699,23 +7700,7 @@ MonoBehaviour:
   state: 0
   isAtk: 0
   isBlock: 0
---- !u!114 &1385924275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385924272}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e405c7f3d0d52da4898c8b36e8aff94f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerState: 0
-  isAttack: 0
-  speed: 5
-  backWalkSpeed: -3
-  frontWalkSpeed: 5
+  animator: {fileID: 0}
 --- !u!136 &1385924276
 CapsuleCollider:
   m_ObjectHideFlags: 0

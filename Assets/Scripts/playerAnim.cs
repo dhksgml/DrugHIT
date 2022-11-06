@@ -4,48 +4,27 @@ using UnityEngine;
 
 public class playerAnim : MonoBehaviour
 {
-    public Animator anim;
-    public playerController playerController;
-    void Start()
+    public Animator animator;
+
+
+    public void InitAnimIdle()
     {
-        anim = GetComponentInChildren<Animator>();
-        playerController = GetComponent<playerController>();
+        animator.SetBool("walkBack", false);
+        animator.SetBool("walkFront", false);
+        animator.SetBool("idle", true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void InitAnimIWalkFront()
     {
-        Anim_check();
-
-        if(playerController.playerState == PlayerStates.Kick && !playerController.isAttack)
-        {
-            LKick_Anim();
-        }
-        else if(playerController.playerState == PlayerStates.Kick && playerController.isAttack)
-        {
-            RKick_Anim();
-        }
+        animator.SetBool("walkBack", false);
+        animator.SetBool("walkFront", true);
+        animator.SetBool("idle", false);
     }
 
-    public void LKick_Anim()
+    public void InitAnimIWalkBack()
     {
-        anim.SetTrigger("Lkick");
-    }
-
-    public void RKick_Anim()
-    {
-        anim.SetTrigger("Rkick");
-    }
-
-    public void Anim_check()
-    {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("left_kick") || anim.GetCurrentAnimatorStateInfo(0).IsName("right_kick"))
-        {
-            playerController.isAttack = true;
-        }
-        else
-        {
-            playerController.isAttack = false;
-        }
+        animator.SetBool("walkBack", true);
+        animator.SetBool("walkFront", false);
+        animator.SetBool("idle", false);
     }
 }
