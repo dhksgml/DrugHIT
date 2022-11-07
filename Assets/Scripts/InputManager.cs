@@ -75,11 +75,16 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G) && !p1.GetCrouch() && !p1.isBlock)
         {
             Debug.Log("G키 눌림");
-            p1.HighPunch();
-        }
 
-        Debug.Log("p1.isBlock : " + !p1.isBlock);
-        Debug.Log("p1.isAtk : " + !p1.isAtk);
+            if (p1.animator.GetCurrentAnimatorStateInfo(0).IsName("hp_straight_A") && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f)
+            {
+                p1.HighPunch(1);
+            }
+            else
+            {
+                p1.HighPunch(0);
+            }
+        }
 
         //중단 막기
         if (Input.GetKeyDown(KeyCode.H) && !p1.GetCrouch() && !p1.GetUpper() && !p1.isBlock && !p1.isAtk)
@@ -93,7 +98,14 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J) && !p1.GetCrouch() && !p1.GetUpper() && !p1.isBlock)
         {
             Debug.Log("J키 눌림");
-            p1.Kick();
+            if (p1.animator.GetCurrentAnimatorStateInfo(0).IsName("bk_push_left_A") && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.9f && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1f)
+            {
+                p1.Kick(1);
+            }
+            else
+            {
+                p1.Kick(0);
+            }
         }
 
         if (Input.GetKey(KeyCode.S))
@@ -107,7 +119,15 @@ public class InputManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.G) && !p1.isBlock)
             {
                 Debug.Log("G키 눌림");
-                p1.Punch();
+
+                if (p1.animator.GetCurrentAnimatorStateInfo(0).IsName("bp_upper_left_A") && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.2f)
+                {
+                    p1.Punch(1);
+                }
+                else
+                {
+                    p1.Punch(0);
+                }
             }
             //하단 막기
             if (Input.GetKeyDown(KeyCode.H) && !p1.isBlock && !p1.isAtk)
@@ -119,7 +139,14 @@ public class InputManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.J) && !p1.isBlock)
             {
                 Debug.Log("J키 눌림");
-                p1.LowKick();
+                if (p1.animator.GetCurrentAnimatorStateInfo(0).IsName("lk_rh_left_A") && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.1f)
+                {
+                    p1.LowKick(1);
+                }
+                else
+                {
+                    p1.LowKick(0);
+                }
             }
         }
 
@@ -135,7 +162,15 @@ public class InputManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.J) && !p1.isBlock)
             {
                 Debug.Log("J키 눌림");
-                p1.HighKick();
+
+                if (p1.animator.GetCurrentAnimatorStateInfo(0).IsName("hk_side_left_A") && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.8f && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f)
+                {
+                    p1.HighKick(1);
+                }
+                else
+                {
+                    p1.HighKick(0);
+                }
             }
             //상단 막기
             if (Input.GetKeyDown(KeyCode.H) && !p1.isBlock && !p1.isAtk)
@@ -192,7 +227,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad1) && !p2.GetCrouch() && !p2.isBlock)
         {
             Debug.Log("숫자1키 눌림");
-            p2.HighPunch();
+            p2.HighPunch(0);
         }
 
         Debug.Log("p2.isBlock : " + !p2.isBlock);
@@ -209,7 +244,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad3) && !p2.GetCrouch() && !p2.GetUpper() && !p2.isBlock)
         {
             Debug.Log("숫자3키 눌림");
-            p2.Kick();
+            p2.Kick(0);
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
@@ -223,7 +258,7 @@ public class InputManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Keypad1) && !p2.isBlock)
             {
                 Debug.Log("숫자1키 눌림");
-                p2.Punch();
+                p2.Punch(0);
             }
             //하단 막기
             if (Input.GetKeyDown(KeyCode.Keypad2) && !p2.isBlock && !p2.isAtk)
@@ -235,7 +270,7 @@ public class InputManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Keypad3) && !p2.isBlock)
             {
                 Debug.Log("숫자3키 눌림");
-                p2.LowKick();
+                p2.LowKick(0);
             }
         }
 
@@ -251,7 +286,7 @@ public class InputManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Keypad3) && !p2.isBlock)
             {
                 Debug.Log("숫자3키 눌림");
-                p2.HighKick();
+                p2.HighKick(0);
             }
             //상단 막기
             if (Input.GetKeyDown(KeyCode.Keypad2) && !p2.isBlock && !p2.isAtk)
