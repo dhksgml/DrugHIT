@@ -2564,6 +2564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 554705185}
+  player: {fileID: 212067399}
 --- !u!95 &554705185 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 95011978518554024, guid: 383c0a12e32514b09bc5645b904558e3, type: 3}
@@ -4139,6 +4140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  player: {fileID: 0}
 --- !u!136 &771758631
 CapsuleCollider:
   m_ObjectHideFlags: 0

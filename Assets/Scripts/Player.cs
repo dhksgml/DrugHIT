@@ -52,6 +52,11 @@ public class Player : MonoBehaviour
         isUpper = B;
     }
 
+
+    public void AnimStop()
+    {
+        animator.StopPlayback();
+    }
     public void Idle()
     {
         //Debug.Log("idle..");
@@ -61,9 +66,10 @@ public class Player : MonoBehaviour
         state = State.idle;
 
         //애니메이션
-        //animator.SetBool("walkBack", false);
-        //animator.SetBool("walkFront", false);
-        //animator.SetBool("idle", true);
+        animator.SetBool("leftAtk", false);
+        animator.SetBool("walkBack", false);
+        animator.SetBool("walkFront", false);
+        
     }
     public void WalkBack(int PlayerNum)
     {
@@ -72,7 +78,7 @@ public class Player : MonoBehaviour
             //Debug.Log("walk_back..");
             state = State.walk_back;
             //애니메이션
-            animator.SetBool("idle", false);
+            
             animator.SetBool("walkBack", true);
 
             //플레이어1
@@ -96,7 +102,7 @@ public class Player : MonoBehaviour
 
             state = State.walk_front;
             //애니메이션
-            animator.SetBool("idle", false);
+            
             animator.SetBool("walkFront", true);
 
             //플레이어1
@@ -111,49 +117,52 @@ public class Player : MonoBehaviour
             }
         }
     }
-    public void HighPunch()
+    public void HighPunch(int LRNum)
     {
         //Debug.Log("highPunch..");
         isAtk = true;
-        if (state == State.hp_left)
+        //애니메이션
+        animator.SetTrigger("hPunch");
+ 
+        if (LRNum == 1)
         {
             state = State.hp_right;
-            //애니메이션
             animator.SetBool("leftAtk", true);
-            animator.SetBool("hPunch", true);
             StopAllCoroutines();
-            StartCoroutine(DoAttack());
+            StartCoroutine(DoAttack(0.7f));
         }
-        else
+        
+        if(LRNum == 0)
         {
             state = State.hp_left;
-            //애니메이션
-            animator.SetBool("hPunch", true);
+            
             StopAllCoroutines();
-            StartCoroutine(DoAttack());
+            StartCoroutine(DoAttack(0.5f));
         }
     }
 
-    public void Punch()
+    public void Punch(int LRNum)
     {
         //Debug.Log("Punch..");
         isAtk = true;
-        if (state == State.bp_left)
+        //애니메이션
+        animator.SetTrigger("bPunch");
+
+        if (LRNum == 1)
         {
             state = State.bp_right;
-            //애니메이션
             animator.SetBool("leftAtk", true);
-            animator.SetBool("bPunch", true);
+            
             StopAllCoroutines();
-            StartCoroutine(DoAttack());
+            StartCoroutine(DoAttack(0.6f));
         }
-        else
+        
+        if(LRNum == 0)
         {
             state = State.bp_left;
-            //애니메이션
-            animator.SetBool("bPunch", true);
+            
             StopAllCoroutines();
-            StartCoroutine(DoAttack());
+            StartCoroutine(DoAttack(1.0f));
         }
     }
 
@@ -163,7 +172,7 @@ public class Player : MonoBehaviour
         isBlock = true;
         state = State.hb_pose;
         //애니메이션
-        animator.SetBool("hBlock", true);
+        animator.SetTrigger("hBlock");
         StopAllCoroutines();
         StartCoroutine(DoBlock());
     }
@@ -173,7 +182,7 @@ public class Player : MonoBehaviour
         isBlock = true;
         state = State.bb_pose;
         //애니메이션
-        animator.SetBool("bBlock", true);
+        animator.SetTrigger("bBlock");
         StopAllCoroutines();
         StartCoroutine(DoBlock());
 
@@ -184,77 +193,83 @@ public class Player : MonoBehaviour
         isBlock = true;
         state = State.lb_pose;
         //애니메이션
-        animator.SetBool("lBlock", true);
+        animator.SetTrigger("lBlock");
         StopAllCoroutines();
         StartCoroutine(DoBlock());
     }
 
-    public void HighKick()
+    public void HighKick(int LRNum)
     {
 
         //Debug.Log("highKick..");
         isAtk = true;
-        if (state == State.hk_left)
+        //애니메이션
+        animator.SetTrigger("hKick");
+
+        if (LRNum == 1)
         {
             state = State.hk_right;
             //애니메이션
             animator.SetBool("leftAtk", true);
-            animator.SetBool("hKick", true);
             StopAllCoroutines();
-            StartCoroutine(DoAttack());
+            StartCoroutine(DoAttack(1.0f));
         }
-        else
+        
+        if(LRNum == 0)
         {
             state = State.hk_left;
-            //애니메이션
-            animator.SetBool("hKick", true);
+
             StopAllCoroutines();
-            StartCoroutine(DoAttack());
+            StartCoroutine(DoAttack(1.0f));
         }
     }
-    public void Kick()
+    public void Kick(int LRNum)
     {
         //Debug.Log("kick..");
         isAtk = true;
-        if (state == State.bk_left)
+        //애니메이션
+        animator.SetTrigger("bKick");
+
+        if (LRNum == 1)
         {
             state = State.bk_right;
             //애니메이션
             animator.SetBool("leftAtk", true);
-            animator.SetBool("bKick", true);
             StopAllCoroutines();
-            StartCoroutine(DoAttack());
+            StartCoroutine(DoAttack(0.6f));
         }
-        else
+        
+        if(LRNum == 0)
         {
             state = State.bk_left;
-            //애니메이션
-            animator.SetBool("bKick", true);
+            
             StopAllCoroutines();
-            StartCoroutine(DoAttack());
+            StartCoroutine(DoAttack(0.5f));
         }
     }
-    public void LowKick()
+    public void LowKick(int LRNum)
     {
         //Debug.Log("lowKick..");
         isAtk = true;
-        if (state == State.lk_left)
+        //애니메이션
+        animator.SetTrigger("lKick");
+        if (LRNum == 1)
         {
-            state = State.lk_right;
             //애니메이션
             animator.SetBool("leftAtk", true);
-            animator.SetBool("lKick", true);
+
+            state = State.lk_right;
+
             StopAllCoroutines();
-            StartCoroutine(DoAttack());
+            StartCoroutine(DoAttack(0.6f));
         }
-        else
+        
+        if(LRNum == 0)
         {
             state = State.lk_left;
-            //애니메이션
-            animator.SetBool("leftAtk", true);
-            animator.SetBool("lKick", true);
+            
             StopAllCoroutines();
-            StartCoroutine(DoAttack());
+            StartCoroutine(DoAttack(0.5f));
         }
     }
 
@@ -264,9 +279,9 @@ public class Player : MonoBehaviour
 
     }
 
-    IEnumerator DoAttack()
+    IEnumerator DoAttack(float sec)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(sec);
         isAtk = false;
         this.Idle();
     }
