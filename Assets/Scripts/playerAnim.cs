@@ -8,29 +8,29 @@ public class playerAnim : MonoBehaviour
 
     public void InitAnimIdle()
     {
-        animator.SetBool("walkBack", false);
-        animator.SetBool("walkFront", false);
+        this.animator.SetBool("walkBack", false);
+        this.animator.SetBool("walkFront", false);
     }
 
     public void InitAnimWalkFront()
     {
-        animator.SetBool("walkBack", false);
-        animator.SetBool("walkFront", true);
+        this.animator.SetBool("walkBack", false);
+        this.animator.SetBool("walkFront", true);
     }
 
     public void InitAnimWalkBack()
     {
-        animator.SetBool("walkBack", true);
-        animator.SetBool("walkFront", false);
+        this.animator.SetBool("walkBack", true);
+        this.animator.SetBool("walkFront", false);
     }
 
     public void InitAnimHPunch()
     {
-        animator.SetBool("leftAtk", false);
+        this.animator.SetBool("leftAtk", false);
     }
 
     public void InitAnimBKick()
     {
-        animator.SetBool("leftAtk", false);
+        this.animator.SetBool("leftAtk", false);
     }
 }
