@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
     public void AnimStop()
     {
-        animator.StopPlayback();
+        this.animator.StopPlayback();
     }
     public void Idle()
     {
@@ -66,9 +66,9 @@ public class Player : MonoBehaviour
         state = State.idle;
 
         //애니메이션
-        animator.SetBool("leftAtk", false);
-        animator.SetBool("walkBack", false);
-        animator.SetBool("walkFront", false);
+        this.animator.SetBool("leftAtk", false);
+        this.animator.SetBool("walkBack", false);
+        this.animator.SetBool("walkFront", false);
         
     }
     public void WalkBack(int PlayerNum)
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
             state = State.walk_back;
             //애니메이션
             
-            animator.SetBool("walkBack", true);
+            this.animator.SetBool("walkBack", true);
 
             //플레이어1
             if (PlayerNum == 0)
@@ -103,17 +103,17 @@ public class Player : MonoBehaviour
             state = State.walk_front;
             //애니메이션
             
-            animator.SetBool("walkFront", true);
+            this.animator.SetBool("walkFront", true);
 
             //플레이어1
             if (PlayerNum == 0)
             {
-                transform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime;
+                transform.position += new Vector3(1, 0, 0) * speed * 1.5f * Time.deltaTime;
             }
             //플레이어2
             else if (PlayerNum == 1)
             {
-                transform.position += new Vector3(-1, 0, 0) * speed * Time.deltaTime;
+                transform.position += new Vector3(-1, 0, 0) * speed * 1.5f * Time.deltaTime;
             }
         }
     }
@@ -122,12 +122,12 @@ public class Player : MonoBehaviour
         //Debug.Log("highPunch..");
         isAtk = true;
         //애니메이션
-        animator.SetTrigger("hPunch");
+        this.animator.SetTrigger("hPunch");
  
         if (LRNum == 1)
         {
             state = State.hp_right;
-            animator.SetBool("leftAtk", true);
+            this.animator.SetBool("leftAtk", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.7f));
         }
@@ -146,12 +146,12 @@ public class Player : MonoBehaviour
         //Debug.Log("Punch..");
         isAtk = true;
         //애니메이션
-        animator.SetTrigger("bPunch");
+        this.animator.SetTrigger("bPunch");
 
         if (LRNum == 1)
         {
             state = State.bp_right;
-            animator.SetBool("leftAtk", true);
+            this.animator.SetBool("leftAtk", true);
             
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.6f));
@@ -162,7 +162,7 @@ public class Player : MonoBehaviour
             state = State.bp_left;
             
             StopAllCoroutines();
-            StartCoroutine(DoAttack(1.0f));
+            StartCoroutine(DoAttack(0.8f));
         }
     }
 
@@ -172,7 +172,7 @@ public class Player : MonoBehaviour
         isBlock = true;
         state = State.hb_pose;
         //애니메이션
-        animator.SetTrigger("hBlock");
+        this.animator.SetTrigger("hBlock");
         StopAllCoroutines();
         StartCoroutine(DoBlock());
     }
@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
         isBlock = true;
         state = State.bb_pose;
         //애니메이션
-        animator.SetTrigger("bBlock");
+        this.animator.SetTrigger("bBlock");
         StopAllCoroutines();
         StartCoroutine(DoBlock());
 
@@ -193,7 +193,7 @@ public class Player : MonoBehaviour
         isBlock = true;
         state = State.lb_pose;
         //애니메이션
-        animator.SetTrigger("lBlock");
+        this.animator.SetTrigger("lBlock");
         StopAllCoroutines();
         StartCoroutine(DoBlock());
     }
@@ -204,13 +204,13 @@ public class Player : MonoBehaviour
         //Debug.Log("highKick..");
         isAtk = true;
         //애니메이션
-        animator.SetTrigger("hKick");
+        this.animator.SetTrigger("hKick");
 
         if (LRNum == 1)
         {
             state = State.hk_right;
             //애니메이션
-            animator.SetBool("leftAtk", true);
+            this.animator.SetBool("leftAtk", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack(1.0f));
         }
@@ -228,13 +228,13 @@ public class Player : MonoBehaviour
         //Debug.Log("kick..");
         isAtk = true;
         //애니메이션
-        animator.SetTrigger("bKick");
+        this.animator.SetTrigger("bKick");
 
         if (LRNum == 1)
         {
             state = State.bk_right;
             //애니메이션
-            animator.SetBool("leftAtk", true);
+            this.animator.SetBool("leftAtk", true);
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.6f));
         }
@@ -252,11 +252,11 @@ public class Player : MonoBehaviour
         //Debug.Log("lowKick..");
         isAtk = true;
         //애니메이션
-        animator.SetTrigger("lKick");
+        this.animator.SetTrigger("lKick");
         if (LRNum == 1)
         {
             //애니메이션
-            animator.SetBool("leftAtk", true);
+            this.animator.SetBool("leftAtk", true);
 
             state = State.lk_right;
 
@@ -269,14 +269,39 @@ public class Player : MonoBehaviour
             state = State.lk_left;
             
             StopAllCoroutines();
-            StartCoroutine(DoAttack(0.5f));
+            StartCoroutine(DoAttack(0.3f));
         }
     }
-
-
-    public void Damaged()
+    public IEnumerator hsDamaged(float sec)
     {
+        state = State.hd_pose;
+        animator.SetTrigger("hsDamaged");
+        yield return new WaitForSeconds(sec);
+        this.Idle();
+    }
 
+    public IEnumerator hwDamaged(float sec)
+    {
+        state = State.hd_pose;
+        animator.SetTrigger("hwDamaged");
+        yield return new WaitForSeconds(sec);
+        this.Idle();
+    }
+
+    public IEnumerator bDamaged(float sec)
+    {
+        state = State.bd_pose;
+        animator.SetTrigger("bDamaged");
+        yield return new WaitForSeconds(sec);
+        this.Idle();
+    }
+
+    public IEnumerator lDamaged(float sec)
+    {
+        state = State.ld_pose;
+        animator.SetTrigger("lDamaged");
+        yield return new WaitForSeconds(sec);
+        this.Idle();
     }
 
     IEnumerator DoAttack(float sec)
