@@ -4,15 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - p1head
-  - p1body
-  - p1leg
-  - p2head
-  - p2body
-  - p2leg
   - head
   - body
   - leg
+  - p1
+  - p2
   layers:
   - Default
   - TransparentFX

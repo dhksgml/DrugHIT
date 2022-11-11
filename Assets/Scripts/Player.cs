@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum State { idle = 0, walk_front, walk_back, hb_pose, bb_pose, lb_pose, ha_pose, ba_pose, la_pose, hd_pose, bd_pose, ld_pose, hg_pose, bg_pose, lg_pose, hk_left, hk_right, bk_left, bk_right, lk_left, lk_right, hp_left, hp_right, bp_left, bp_right, win_pose, lose_pose }
+public enum State { idle = 0, walk_front, walk_back, hb_pose, bb_pose, lb_pose, ha_pose, ba_pose, la_pose, hd_pose, bd_pose, ld_pose, hg_pose, bg_pose, lg_pose, hk_left, hk_right, bk_left, bk_right, lk_left, lk_right, hp_left, hp_right, bp_left, bp_right, hp_Counter, hk_Counter, bp_Counter, bk_Counter, lk_Counter,win_pose, lose_pose }
 
 public class Player : MonoBehaviour
 {
@@ -21,9 +21,9 @@ public class Player : MonoBehaviour
     protected int atkPower = 0;
 
     //하단 입력 여부
-    protected bool isCrouch = false;
+    public bool isCrouch = false;
     //상단 입력 여부
-    protected bool isUpper = false;
+    public bool isUpper = false;
     //공격 입력 여부
     public bool isAtk = false;
     //막기 입력 여부
@@ -31,6 +31,16 @@ public class Player : MonoBehaviour
 
     public Animator animator;
 
+    private BoxCollider head;
+    private BoxCollider body;
+    private BoxCollider leg;
+
+    private void Start()
+    {
+        head = transform.GetChild(1).GetComponent<BoxCollider>();
+        body = transform.GetChild(2).GetComponent<BoxCollider>();
+        leg = transform.GetChild(3).GetComponent<BoxCollider>();
+    }
 
     public bool GetCrouch()
     {
@@ -117,6 +127,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+    //일반 공격
     public void HighPunch(int LRNum)
     {
         //Debug.Log("highPunch..");
@@ -272,11 +283,15 @@ public class Player : MonoBehaviour
             StartCoroutine(DoAttack(0.3f));
         }
     }
+
+
+    
     public IEnumerator hsDamaged(float sec)
     {
         state = State.hd_pose;
         animator.SetTrigger("hsDamaged");
         yield return new WaitForSeconds(sec);
+        head.enabled = true;
         this.Idle();
     }
 
@@ -285,6 +300,7 @@ public class Player : MonoBehaviour
         state = State.hd_pose;
         animator.SetTrigger("hwDamaged");
         yield return new WaitForSeconds(sec);
+        head.enabled = true;
         this.Idle();
     }
 
@@ -293,6 +309,7 @@ public class Player : MonoBehaviour
         state = State.bd_pose;
         animator.SetTrigger("bDamaged");
         yield return new WaitForSeconds(sec);
+        body.enabled = true;
         this.Idle();
     }
 
@@ -301,6 +318,7 @@ public class Player : MonoBehaviour
         state = State.ld_pose;
         animator.SetTrigger("lDamaged");
         yield return new WaitForSeconds(sec);
+        leg.enabled = true;
         this.Idle();
     }
 
@@ -318,4 +336,11 @@ public class Player : MonoBehaviour
         this.Idle();
     }
 
+    IEnumerable AtkFail(float sec)
+    {
+        state = State.ha_pose;
+        animator.SetTrigger("hsDamaged");
+        yield return new WaitForSeconds(sec);
+        this.Idle();
+    }
 }

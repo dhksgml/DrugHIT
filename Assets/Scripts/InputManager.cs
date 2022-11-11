@@ -68,17 +68,17 @@ public class InputManager : MonoBehaviour
             {
                 //Debug.Log("D키 눌림");
                 p1.WalkFront(0);
-                if (p1.transform.position.x + 0.3f > p2.transform.position.x)
+                if (p1.transform.position.x + 1.0f > p2.transform.position.x)
                 {
-                    p1.transform.position = p2.transform.position - new Vector3(0.3f, 0, 0);
+                    p1.transform.position = p2.transform.position - new Vector3(1.0f, 0, 0);
                 }
             }
 
+            
             //상단 주먹
             if (Input.GetKeyDown(KeyCode.G) && !p1.GetCrouch() && !p1.isBlock)
             {
                 //Debug.Log("G키 눌림");
-
                 if (p1.animator.GetCurrentAnimatorStateInfo(0).IsName("hp_straight_A") && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f && p1.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f)
                 {
                     p1.HighPunch(1);
@@ -184,22 +184,22 @@ public class InputManager : MonoBehaviour
 
             }
 
-            if (Input.GetKeyUp(KeyCode.W))
+            if (Input.GetKeyUp(KeyCode.W) && p1.state != State.hp_Counter)
             {
                 p1.SetUpper(false);
             }
-            if (Input.GetKeyUp(KeyCode.S))
+            if (Input.GetKeyUp(KeyCode.S) && p1.state != State.hp_Counter)
             {
                 p1.SetCrouch(false);
             }
 
-            if ((Input.GetKeyUp(KeyCode.A) && !p1.isAtk && !p1.isBlock) || (Input.GetKeyUp(KeyCode.D) && !p1.isAtk && !p1.isBlock) || (Input.GetKeyUp(KeyCode.H) && !p1.isAtk && !p1.isBlock))
+            if ((Input.GetKeyUp(KeyCode.A) && !p1.isAtk && !p1.isBlock) || (Input.GetKeyUp(KeyCode.D) && !p1.isAtk && !p1.isBlock) || (Input.GetKeyUp(KeyCode.H) && !p1.isAtk && !p1.isBlock) && p1.state != State.hp_Counter)
             {
                 p1.Idle();
             }
 
 
-            if (Input.GetKeyUp(KeyCode.S))
+            if (Input.GetKeyUp(KeyCode.S) && p1.state != State.hp_Counter)
             {
                 p1.SetCrouch(false);
                 p1.SetUpper(false);
@@ -225,9 +225,9 @@ public class InputManager : MonoBehaviour
             {
                 //Debug.Log("오른쪽 키 눌림");
                 p2.WalkFront(1);
-                if (p2.transform.position.x < p1.transform.position.x + 0.3f)
+                if (p2.transform.position.x < p1.transform.position.x + 1.0f)
                 {
-                    p2.transform.position = p1.transform.position + new Vector3(0.3f, 0, 0);
+                    p2.transform.position = p1.transform.position + new Vector3(1.0f, 0, 0);
                 }
             }
 

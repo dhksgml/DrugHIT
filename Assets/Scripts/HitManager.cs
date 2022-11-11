@@ -9,15 +9,20 @@ public class HitManager : MonoBehaviour
     [SerializeField]
     private Player2 p2;
 
-    public bool isHeadHit1 = false;
+    public bool isHeadWeakHit1 = false;
+    public bool isHeadStrongHit1 = false;
     public bool isBodyHit1 = false;
     public bool isLegHit1 = false;
 
-    public bool isHeadHit2 = false;
+    public bool isHeadWeakHit2 = false;
+    public bool isHeadStrongHit2 = false;
     public bool isBodyHit2 = false;
     public bool isLegHit2 = false;
 
-    private float headDelay = 0.2f;
+    private float headWHitDelay = 0.3f;
+    private float headSHitDelay = 0.3f;
+    private float bodyHitDelay = 0.3f;
+    private float legHitDelay = 0.3f;
 
     private void Start()
     {
@@ -26,63 +31,63 @@ public class HitManager : MonoBehaviour
 
     private void Update()
     {
-        if (isHeadHit2 && (p1.state == State.hp_left || p1.state == State.hp_right))
+        if (isHeadWeakHit2)
         {
             Debug.Log("2p 약하게 머리 맞음");
-            isHeadHit2 = false;
-            StopAllCoroutines();
-            StartCoroutine(p2.hwDamaged(headDelay));
+            isHeadWeakHit2 = false;
+            //StopAllCoroutines();
+            StartCoroutine(p2.hwDamaged(headWHitDelay));
         }
-        if(isHeadHit2 && (p1.state == State.hk_left || p1.state == State.hk_right))
+        if (isHeadStrongHit2)
         {
             Debug.Log("2p 세게 머리 맞음");
-            isHeadHit2 = false;
-            StopAllCoroutines();
-            StartCoroutine(p2.hsDamaged(0.3f));
+            isHeadStrongHit2 = false;
+            //StopAllCoroutines();
+            StartCoroutine(p2.hsDamaged(headSHitDelay));
         }
-        if (isBodyHit2 && (p1.state == State.bp_left || p1.state == State.bp_right || p1.state == State.bk_left || p1.state == State.bk_right))
+        if (isBodyHit2)
         {
             Debug.Log("2p 몸통 맞음");
             isBodyHit2 = false;
-            StopAllCoroutines();
-            StartCoroutine(p2.bDamaged(0.3f));
+            //StopAllCoroutines();
+            StartCoroutine(p2.bDamaged(bodyHitDelay));
         }
-        if (isLegHit2 && (p1.state == State.lk_left || p1.state == State.lk_right))
+        if (isLegHit2)
         {
             Debug.Log("2p 다리 맞음");
             isLegHit2 = false;
-            StopAllCoroutines();
-            StartCoroutine(p2.lDamaged(0.3f));
+            //StopAllCoroutines();
+            StartCoroutine(p2.lDamaged(legHitDelay));
         }
 
 
-        if (isHeadHit1 && (p2.state == State.hp_left || p2.state == State.hp_right))
+        if (isHeadWeakHit1)
         {
             Debug.Log("1p 약하게 머리 맞음");
-            isHeadHit1 = false;
-            StopAllCoroutines();
-            StartCoroutine(p1.hwDamaged(headDelay));
+            isHeadWeakHit1 = false;
+            //StopAllCoroutines();
+            StartCoroutine(p1.hwDamaged(headWHitDelay));
         }
-        if(isHeadHit1 && (p2.state == State.hk_left || p2.state == State.hk_right))
+        if (isHeadStrongHit1)
         {
             Debug.Log("1p 세게 머리 맞음");
-            isHeadHit1 = false;
-            StopAllCoroutines();
-            StartCoroutine(p1.hsDamaged(0.3f));
+            isHeadStrongHit1 = false;
+            //StopAllCoroutines();
+            StartCoroutine(p1.hsDamaged(headSHitDelay));
         }
-        if (isBodyHit1 && (p2.state == State.bp_left || p2.state == State.bp_right || p2.state == State.bk_left || p2.state == State.bk_right))
+        if (isBodyHit1)
         {
             Debug.Log("1p 몸통 맞음");
             isBodyHit1 = false;
-            StopAllCoroutines();
-            StartCoroutine(p1.bDamaged(0.3f));
+            //StopAllCoroutines();
+            StartCoroutine(p1.bDamaged(bodyHitDelay));
         }
-        if (isLegHit1 && (p2.state == State.lk_left || p2.state == State.lk_right))
+        if (isLegHit1)
         {
             Debug.Log("1p 다리 맞음");
             isLegHit1 = false;
-            StopAllCoroutines();
-            StartCoroutine(p1.lDamaged(0.3f));
+            //StopAllCoroutines();
+            StartCoroutine(p1.lDamaged(legHitDelay));
         }
     }
 }
