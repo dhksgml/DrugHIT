@@ -4722,6 +4722,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p1: {fileID: 212067399}
   p2: {fileID: 393933298}
+  p1Hpbar: {fileID: 1923469076}
+  p2Hpbar: {fileID: 1591903517}
   isHeadWeakHit1: 0
   isHeadStrongHit1: 0
   isBodyHit1: 0
