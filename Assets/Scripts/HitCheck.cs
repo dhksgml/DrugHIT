@@ -27,22 +27,19 @@ public class HitCheck : MonoBehaviour
                     //1p 막기 성공
                     if(p1.state == State.hb_pose)
                     {
-                        p1.isUpper = false;
-                        p1.isCrouch = false;
-                        p1.isBlock = false;
-                        p1.state = State.hg_pose;
-
-                        //애니메이션
-                        p1.animator.SetBool("leftAtk", false);
-                        p1.animator.SetBool("walkBack", false);
-                        p1.animator.SetBool("walkFront", false);
-
-                        hitManager.isHeadWeakHit2 = true;
+                        p1.Counter();
+                        hitManager.isHeadStrongHit2 = true;
+                        //막기 성공 시, 2p 공격력 반사
+                        p2.curHP -= p2.atkPower;
                     }
                     else
                     {
                         this.GetComponent<BoxCollider>().enabled = false;
                         hitManager.isHeadWeakHit1 = true;
+
+                        //1p 체력 소모
+                        p1.curHP -= p2.atkPower;
+
                     }
                 }
             }
@@ -53,22 +50,15 @@ public class HitCheck : MonoBehaviour
                 {
                     if(p1.state == State.hb_pose)
                     {
-                        p1.isUpper = false;
-                        p1.isCrouch = false;
-                        p1.isBlock = false;
-                        p1.state = State.hg_pose;
-
-                        //애니메이션
-                        p1.animator.SetBool("leftAtk", false);
-                        p1.animator.SetBool("walkBack", false);
-                        p1.animator.SetBool("walkFront", false);
-
+                        p1.Counter();
                         hitManager.isHeadStrongHit2 = true;
+                        p2.curHP -= p2.atkPower;
                     }
                     else
                     {
                         this.GetComponent<BoxCollider>().enabled = false;
                         hitManager.isHeadStrongHit1 = true;
+                        p1.curHP -= p2.atkPower;
                     }
                 }
             }
@@ -79,22 +69,15 @@ public class HitCheck : MonoBehaviour
                 {
                     if (p1.state == State.bb_pose)
                     {
-                        p1.isUpper = false;
-                        p1.isCrouch = false;
-                        p1.isBlock = false;
-                        p1.state = State.hg_pose;
-
-                        //애니메이션
-                        p1.animator.SetBool("leftAtk", false);
-                        p1.animator.SetBool("walkBack", false);
-                        p1.animator.SetBool("walkFront", false);
-
-                        hitManager.isBodyHit2 = true;
+                        p1.Counter();
+                        hitManager.isHeadStrongHit2 = true;
+                        p2.curHP -= p2.atkPower;
                     }
                     else
                     {
                         this.GetComponent<BoxCollider>().enabled = false;
                         hitManager.isBodyHit1 = true;
+                        p1.curHP -= p2.atkPower;
                     }
                 }
             }
@@ -105,22 +88,15 @@ public class HitCheck : MonoBehaviour
                 {
                     if (p1.state == State.lb_pose)
                     {
-                        p1.isUpper = false;
-                        p1.isCrouch = false;
-                        p1.isBlock = false;
-                        p1.state = State.hg_pose;
-
-                        //애니메이션
-                        p1.animator.SetBool("leftAtk", false);
-                        p1.animator.SetBool("walkBack", false);
-                        p1.animator.SetBool("walkFront", false);
-
-                        hitManager.isLegHit2 = true;
+                        p1.Counter();
+                        hitManager.isHeadStrongHit2 = true;
+                        p2.curHP -= p2.atkPower;
                     }
                     else
                     {
                         this.GetComponent<BoxCollider>().enabled = false;
                         hitManager.isLegHit1 = true;
+                        p1.curHP -= p2.atkPower;
                     }
                 }
             }
@@ -133,9 +109,19 @@ public class HitCheck : MonoBehaviour
                 
                 if (other.name == "hand.L" || other.name == "hand.R")
                 {
-
-                    this.GetComponent<BoxCollider>().enabled = false;
-                    hitManager.isHeadWeakHit2 = true;
+                    //2p 막기 성공
+                    if (p2.state == State.hb_pose)
+                    {
+                        p2.Counter();
+                        hitManager.isHeadStrongHit1 = true;
+                        p1.curHP -= p1.atkPower;
+                    }
+                    else
+                    {
+                        this.GetComponent<BoxCollider>().enabled = false;
+                        hitManager.isHeadWeakHit2 = true;
+                        p2.curHP -= p1.atkPower;
+                    }
                 }
             }
             
@@ -143,9 +129,19 @@ public class HitCheck : MonoBehaviour
             {
                 if (other.name == "foot.L" || other.name == "foot.R")
                 {
-
-                    this.GetComponent<BoxCollider>().enabled = false;
-                    hitManager.isHeadStrongHit2 = true;
+                    //2p 막기 성공
+                    if (p2.state == State.hb_pose)
+                    {
+                        p2.Counter();
+                        hitManager.isHeadStrongHit1 = true;
+                        p1.curHP -= p1.atkPower;
+                    }
+                    else
+                    {
+                        this.GetComponent<BoxCollider>().enabled = false;
+                        hitManager.isHeadStrongHit2 = true;
+                        p2.curHP -= p1.atkPower;
+                    }
                 }
             }
 
@@ -153,8 +149,19 @@ public class HitCheck : MonoBehaviour
             {
                 if (other.name == "hand.L" || other.name == "hand.R" || other.name == "foot.L" || other.name == "foot.R")
                 {
-                    this.GetComponent<BoxCollider>().enabled = false;
-                    hitManager.isBodyHit2 = true;
+                    //2p 막기 성공
+                    if (p2.state == State.bb_pose)
+                    {
+                        p2.Counter();
+                        hitManager.isHeadStrongHit1 = true;
+                        p1.curHP -= p1.atkPower;
+                    }
+                    else
+                    {
+                        this.GetComponent<BoxCollider>().enabled = false;
+                        hitManager.isBodyHit2 = true;
+                        p2.curHP -= p1.atkPower;
+                    }
                 }
             }
             
@@ -162,53 +169,32 @@ public class HitCheck : MonoBehaviour
             {
                 if (other.name == "hand.L" || other.name == "hand.R" || other.name == "foot.L" || other.name == "foot.R")
                 {
-                    
-                    this.GetComponent<BoxCollider>().enabled = false;
-                    hitManager.isLegHit2 = true;
+                    //2p 막기 성공
+                    if (p2.state == State.lb_pose)
+                    {
+                        p2.Counter();
+                        hitManager.isHeadStrongHit1 = true;
+                        p1.curHP -= p1.atkPower;
+                    }
+                    else
+                    {
+                        this.GetComponent<BoxCollider>().enabled = false;
+                        hitManager.isLegHit2 = true;
+                        p2.curHP -= p1.atkPower;
+                    }
                 }
             }
         }
+
+        if (p1.curHP <= 0)
+        {
+            hitManager.DieP1();
+        }
+
+        if (p2.curHP <= 0)
+        {
+            hitManager.DieP2();
+        }
     }
 
-    //private void OnTriggerExit(Collider other)
-    //{   
-    //    //player1
-    //    if (this.gameObject.layer == 6)
-    //    {
-    //        if (this.CompareTag("head"))
-    //        {
-    //            if(other.name == "hand.L" || other.name == "hand.R" || other.name == "foot.L" || other.name == "foot.R")
-    //                hitManager.isHeadHit1 = false;
-    //        }
-    //        else if (this.CompareTag("body"))
-    //        {
-    //            if (other.name == "hand.L" || other.name == "hand.R" || other.name == "foot.L" || other.name == "foot.R")
-    //                hitManager.isBodyHit1 = false;
-    //        }
-    //        else if (this.CompareTag("leg"))
-    //        {
-    //            if (other.name == "hand.L" || other.name == "hand.R" || other.name == "foot.L" || other.name == "foot.R")
-    //                hitManager.isLegHit1 = false;
-    //        }
-    //    }
-    //    //player2
-    //    if (this.gameObject.layer == 7)
-    //    {
-    //        if (this.CompareTag("head"))
-    //        {
-    //            if (other.name == "hand.L" || other.name == "hand.R" || other.name == "foot.L" || other.name == "foot.R")
-    //                hitManager.isHeadHit2 = false;
-    //        }
-    //        else if (this.CompareTag("body"))
-    //        {
-    //            if (other.name == "hand.L" || other.name == "hand.R" || other.name == "foot.L" || other.name == "foot.R")
-    //                hitManager.isBodyHit2 = false;
-    //        }
-    //        else if (this.CompareTag("leg"))
-    //        {
-    //            if (other.name == "hand.L" || other.name == "hand.R" || other.name == "foot.L" || other.name == "foot.R")
-    //                hitManager.isLegHit2 = false;
-    //        }
-    //    }
-    //}
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum State { idle = 0, walk_front, walk_back, hb_pose, bb_pose, lb_pose, ha_pose, ba_pose, la_pose, hd_pose, bd_pose, ld_pose, hg_pose, bg_pose, lg_pose, hk_left, hk_right, bk_left, bk_right, lk_left, lk_right, hp_left, hp_right, bp_left, bp_right, hp_Counter, hk_Counter, bp_Counter, bk_Counter, lk_Counter,win_pose, lose_pose }
+public enum State { idle = 0, walk_front, walk_back, hb_pose, bb_pose, lb_pose, ha_pose, ba_pose, la_pose, hd_pose, bd_pose, ld_pose, hg_pose, bg_pose, lg_pose, hk_left, hk_right, bk_left, bk_right, lk_left, lk_right, hp_left, hp_right, bp_left, bp_right, Counter,win_pose, lose_pose }
 
 public class Player : MonoBehaviour
 {
@@ -10,15 +10,15 @@ public class Player : MonoBehaviour
     public float speed = 10;
 
     //플레이어 최대체력
-    protected float maxHP = 100;
+    public float maxHP = 100;
     //플레이어 현재체력
-    protected float curHP = 100;
+    public float curHP = 100;
     //플레이어 현재 상태
     public State state = State.idle;
     //플레이어 색상
     protected int color = 0;
     //플레이어 공격력
-    protected int atkPower = 0;
+    public int atkPower = 0;
 
     //하단 입력 여부
     public bool isCrouch = false;
@@ -74,6 +74,7 @@ public class Player : MonoBehaviour
         isCrouch = false;
         isBlock = false;
         state = State.idle;
+        atkPower = 0;
 
         //애니메이션
         this.animator.SetBool("leftAtk", false);
@@ -127,7 +128,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    //일반 공격
+
     public void HighPunch(int LRNum)
     {
         //Debug.Log("highPunch..");
@@ -139,6 +140,7 @@ public class Player : MonoBehaviour
         {
             state = State.hp_right;
             this.animator.SetBool("leftAtk", true);
+            atkPower = 5;
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.7f));
         }
@@ -146,7 +148,7 @@ public class Player : MonoBehaviour
         if(LRNum == 0)
         {
             state = State.hp_left;
-            
+            atkPower = 4;
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.5f));
         }
@@ -163,7 +165,7 @@ public class Player : MonoBehaviour
         {
             state = State.bp_right;
             this.animator.SetBool("leftAtk", true);
-            
+            atkPower = 7;
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.6f));
         }
@@ -171,7 +173,7 @@ public class Player : MonoBehaviour
         if(LRNum == 0)
         {
             state = State.bp_left;
-            
+            atkPower = 6;
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.8f));
         }
@@ -222,6 +224,7 @@ public class Player : MonoBehaviour
             state = State.hk_right;
             //애니메이션
             this.animator.SetBool("leftAtk", true);
+            atkPower = 18;
             StopAllCoroutines();
             StartCoroutine(DoAttack(1.0f));
         }
@@ -229,7 +232,7 @@ public class Player : MonoBehaviour
         if(LRNum == 0)
         {
             state = State.hk_left;
-
+            atkPower = 15;
             StopAllCoroutines();
             StartCoroutine(DoAttack(1.0f));
         }
@@ -246,6 +249,7 @@ public class Player : MonoBehaviour
             state = State.bk_right;
             //애니메이션
             this.animator.SetBool("leftAtk", true);
+            atkPower = 13;
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.6f));
         }
@@ -253,7 +257,7 @@ public class Player : MonoBehaviour
         if(LRNum == 0)
         {
             state = State.bk_left;
-            
+            atkPower = 10;
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.5f));
         }
@@ -270,7 +274,7 @@ public class Player : MonoBehaviour
             this.animator.SetBool("leftAtk", true);
 
             state = State.lk_right;
-
+            atkPower = 9;
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.6f));
         }
@@ -278,14 +282,25 @@ public class Player : MonoBehaviour
         if(LRNum == 0)
         {
             state = State.lk_left;
-            
+            atkPower = 6;
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.3f));
         }
     }
 
+    public void Counter()
+    {
+        isUpper = false;
+        isCrouch = false;
+        isBlock = false;
+        state = State.Counter;
 
-    
+        //애니메이션
+        animator.SetBool("leftAtk", false);
+        animator.SetBool("walkBack", false);
+        animator.SetBool("walkFront", false);
+    }
+
     public IEnumerator hsDamaged(float sec)
     {
         state = State.hd_pose;
@@ -333,14 +348,6 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         isBlock = false;
-        this.Idle();
-    }
-
-    IEnumerable AtkFail(float sec)
-    {
-        state = State.ha_pose;
-        animator.SetTrigger("hsDamaged");
-        yield return new WaitForSeconds(sec);
         this.Idle();
     }
 }

@@ -33,6 +33,9 @@ public class InputManager : MonoBehaviour
         p1_text_UI.text = "1P 상태 : " + p1.state;
         p2_text_UI.text = "2P 상태 : " + p2.state;
 
+        Debug.Log("1p 체력: " + p1.curHP);
+        Debug.Log("2p 체력: " + p2.curHP);
+
         #region 누른 조작키 UI
         if (Input.GetKey(KeyCode.A)) { p1_press_UI.transform.GetChild(0).gameObject.SetActive(false); } else { p1_press_UI.transform.GetChild(0).gameObject.SetActive(true); }
         if (Input.GetKey(KeyCode.S)) { p1_press_UI.transform.GetChild(1).gameObject.SetActive(false); } else { p1_press_UI.transform.GetChild(1).gameObject.SetActive(true); }
@@ -184,22 +187,22 @@ public class InputManager : MonoBehaviour
 
             }
 
-            if (Input.GetKeyUp(KeyCode.W) && p1.state != State.hp_Counter)
+            if (Input.GetKeyUp(KeyCode.W) && p1.state != State.Counter)
             {
                 p1.SetUpper(false);
             }
-            if (Input.GetKeyUp(KeyCode.S) && p1.state != State.hp_Counter)
+            if (Input.GetKeyUp(KeyCode.S) && p1.state != State.Counter)
             {
                 p1.SetCrouch(false);
             }
 
-            if ((Input.GetKeyUp(KeyCode.A) && !p1.isAtk && !p1.isBlock) || (Input.GetKeyUp(KeyCode.D) && !p1.isAtk && !p1.isBlock) || (Input.GetKeyUp(KeyCode.H) && !p1.isAtk && !p1.isBlock) && p1.state != State.hp_Counter)
+            if ((Input.GetKeyUp(KeyCode.A) && !p1.isAtk && !p1.isBlock) || (Input.GetKeyUp(KeyCode.D) && !p1.isAtk && !p1.isBlock) || (Input.GetKeyUp(KeyCode.H) && !p1.isAtk && !p1.isBlock) && p1.state != State.Counter)
             {
                 p1.Idle();
             }
 
 
-            if (Input.GetKeyUp(KeyCode.S) && p1.state != State.hp_Counter)
+            if (Input.GetKeyUp(KeyCode.S) && p1.state != State.Counter)
             {
                 p1.SetCrouch(false);
                 p1.SetUpper(false);
