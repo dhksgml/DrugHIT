@@ -31,15 +31,22 @@ public class Player : MonoBehaviour
 
     public Animator animator;
 
+    private AudioSource audioSource;
+    public AudioClip[] audioClips;
+
     private BoxCollider head;
     private BoxCollider body;
     private BoxCollider leg;
+
+    public bool isDie = false;
 
     private void Start()
     {
         head = transform.GetChild(1).GetComponent<BoxCollider>();
         body = transform.GetChild(2).GetComponent<BoxCollider>();
         leg = transform.GetChild(3).GetComponent<BoxCollider>();
+
+        audioSource = this.GetComponent<AudioSource>();
     }
 
     public bool GetCrouch()
@@ -135,7 +142,10 @@ public class Player : MonoBehaviour
         isAtk = true;
         //애니메이션
         this.animator.SetTrigger("hPunch");
- 
+
+        //효과음
+        audioSource.clip = audioClips[0];
+
         if (LRNum == 1)
         {
             state = State.hp_right;
@@ -160,6 +170,8 @@ public class Player : MonoBehaviour
         isAtk = true;
         //애니메이션
         this.animator.SetTrigger("bPunch");
+
+        audioSource.clip = audioClips[0];
 
         if (LRNum == 1)
         {
@@ -186,6 +198,9 @@ public class Player : MonoBehaviour
         state = State.hb_pose;
         //애니메이션
         this.animator.SetTrigger("hBlock");
+
+        audioSource.clip = audioClips[3];
+
         StopAllCoroutines();
         StartCoroutine(DoBlock());
     }
@@ -196,6 +211,9 @@ public class Player : MonoBehaviour
         state = State.bb_pose;
         //애니메이션
         this.animator.SetTrigger("bBlock");
+
+        audioSource.clip = audioClips[3];
+
         StopAllCoroutines();
         StartCoroutine(DoBlock());
 
@@ -207,6 +225,9 @@ public class Player : MonoBehaviour
         state = State.lb_pose;
         //애니메이션
         this.animator.SetTrigger("lBlock");
+
+        audioSource.clip = audioClips[3];
+
         StopAllCoroutines();
         StartCoroutine(DoBlock());
     }
@@ -218,6 +239,8 @@ public class Player : MonoBehaviour
         isAtk = true;
         //애니메이션
         this.animator.SetTrigger("hKick");
+
+        audioSource.clip = audioClips[1];
 
         if (LRNum == 1)
         {
@@ -250,6 +273,9 @@ public class Player : MonoBehaviour
             //애니메이션
             this.animator.SetBool("leftAtk", true);
             atkPower = 13;
+
+            audioSource.clip = audioClips[2];
+
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.6f));
         }
@@ -258,6 +284,9 @@ public class Player : MonoBehaviour
         {
             state = State.bk_left;
             atkPower = 10;
+
+            audioSource.clip = audioClips[1];
+
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.5f));
         }
@@ -268,6 +297,7 @@ public class Player : MonoBehaviour
         isAtk = true;
         //애니메이션
         this.animator.SetTrigger("lKick");
+
         if (LRNum == 1)
         {
             //애니메이션
@@ -275,6 +305,9 @@ public class Player : MonoBehaviour
 
             state = State.lk_right;
             atkPower = 9;
+
+            audioSource.clip = audioClips[2];
+
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.6f));
         }
@@ -283,6 +316,9 @@ public class Player : MonoBehaviour
         {
             state = State.lk_left;
             atkPower = 6;
+
+            audioSource.clip = audioClips[1];
+
             StopAllCoroutines();
             StartCoroutine(DoAttack(0.3f));
         }
@@ -301,12 +337,24 @@ public class Player : MonoBehaviour
         animator.SetBool("walkFront", false);
     }
 
+    public void Die()
+    {
+        isDie = true;
+        head.enabled = false;
+        body.enabled = false;
+        leg.enabled = false;
+
+        state = State.lose_pose;
+        animator.SetTrigger("die");
+    }
+
     public IEnumerator hsDamaged(float sec)
     {
         state = State.hd_pose;
         animator.SetTrigger("hsDamaged");
         yield return new WaitForSeconds(sec);
-        head.enabled = true;
+        if(!isDie)
+            head.enabled = true;
         this.Idle();
     }
 
@@ -315,7 +363,8 @@ public class Player : MonoBehaviour
         state = State.hd_pose;
         animator.SetTrigger("hwDamaged");
         yield return new WaitForSeconds(sec);
-        head.enabled = true;
+        if (!isDie)
+            head.enabled = true;
         this.Idle();
     }
 
@@ -324,7 +373,8 @@ public class Player : MonoBehaviour
         state = State.bd_pose;
         animator.SetTrigger("bDamaged");
         yield return new WaitForSeconds(sec);
-        body.enabled = true;
+        if (!isDie)
+            body.enabled = true;
         this.Idle();
     }
 
@@ -333,12 +383,14 @@ public class Player : MonoBehaviour
         state = State.ld_pose;
         animator.SetTrigger("lDamaged");
         yield return new WaitForSeconds(sec);
-        leg.enabled = true;
+        if (!isDie)
+            leg.enabled = true;
         this.Idle();
     }
 
     IEnumerator DoAttack(float sec)
     {
+        audioSource.Play();
         yield return new WaitForSeconds(sec);
         isAtk = false;
         this.Idle();
@@ -346,6 +398,7 @@ public class Player : MonoBehaviour
 
     IEnumerator DoBlock()
     {
+        audioSource.Play();
         yield return new WaitForSeconds(1f);
         isBlock = false;
         this.Idle();

@@ -15,6 +15,14 @@ public class HitManager : MonoBehaviour
     [SerializeField]
     private Slider p2Hpbar;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip[] audioClips;
+
+    private RoundManager roundManager;
+
     public bool isHeadWeakHit1 = false;
     public bool isHeadStrongHit1 = false;
     public bool isBodyHit1 = false;
@@ -30,12 +38,12 @@ public class HitManager : MonoBehaviour
     private float bodyHitDelay = 0.3f;
     private float legHitDelay = 0.3f;
 
-    private bool isDieP1 = false;
-    private bool isDieP2 = false;
+    public bool isDieP1 = false;
+    public bool isDieP2 = false;
 
     private void Start()
     {
-
+        roundManager = GameObject.Find("RoundManager").GetComponent<RoundManager>();
     }
 
     private void Update()
@@ -45,6 +53,8 @@ public class HitManager : MonoBehaviour
             //Debug.Log("2p 약하게 머리 맞음");
             isHeadWeakHit2 = false;
             //StopAllCoroutines();
+            audioSource.clip = audioClips[0];
+            audioSource.Play();
             StartCoroutine(p2.hwDamaged(headWHitDelay));
         }
         if (isHeadStrongHit2)
@@ -52,6 +62,8 @@ public class HitManager : MonoBehaviour
             //Debug.Log("2p 세게 머리 맞음");
             isHeadStrongHit2 = false;
             //StopAllCoroutines();
+            audioSource.clip = audioClips[1];
+            audioSource.Play();
             StartCoroutine(p2.hsDamaged(headSHitDelay));
         }
         if (isBodyHit2)
@@ -59,6 +71,8 @@ public class HitManager : MonoBehaviour
             //Debug.Log("2p 몸통 맞음");
             isBodyHit2 = false;
             //StopAllCoroutines();
+            audioSource.clip = audioClips[2];
+            audioSource.Play();
             StartCoroutine(p2.bDamaged(bodyHitDelay));
         }
         if (isLegHit2)
@@ -66,6 +80,8 @@ public class HitManager : MonoBehaviour
             //Debug.Log("2p 다리 맞음");
             isLegHit2 = false;
             //StopAllCoroutines();
+            audioSource.clip = audioClips[3];
+            audioSource.Play();
             StartCoroutine(p2.lDamaged(legHitDelay));
         }
 
@@ -75,6 +91,8 @@ public class HitManager : MonoBehaviour
             //Debug.Log("1p 약하게 머리 맞음");
             isHeadWeakHit1 = false;
             //StopAllCoroutines();
+            audioSource.clip = audioClips[0];
+            audioSource.Play();
             StartCoroutine(p1.hwDamaged(headWHitDelay));
         }
         if (isHeadStrongHit1)
@@ -82,6 +100,8 @@ public class HitManager : MonoBehaviour
             //Debug.Log("1p 세게 머리 맞음");
             isHeadStrongHit1 = false;
             //StopAllCoroutines();
+            audioSource.clip = audioClips[1];
+            audioSource.Play();
             StartCoroutine(p1.hsDamaged(headSHitDelay));
         }
         if (isBodyHit1)
@@ -89,6 +109,8 @@ public class HitManager : MonoBehaviour
             //Debug.Log("1p 몸통 맞음");
             isBodyHit1 = false;
             //StopAllCoroutines();
+            audioSource.clip = audioClips[2];
+            audioSource.Play();
             StartCoroutine(p1.bDamaged(bodyHitDelay));
         }
         if (isLegHit1)
@@ -96,6 +118,8 @@ public class HitManager : MonoBehaviour
             //Debug.Log("1p 다리 맞음");
             isLegHit1 = false;
             //StopAllCoroutines();
+            audioSource.clip = audioClips[3];
+            audioSource.Play();
             StartCoroutine(p1.lDamaged(legHitDelay));
         }
 
@@ -107,11 +131,15 @@ public class HitManager : MonoBehaviour
     {
         isDieP1 = true;
         Debug.Log("1p 죽음");
+        roundManager.p2winCnt += 1;
+        roundManager.RoundAdd();
     }
 
     public void DieP2()
     {
         isDieP2 = true;
         Debug.Log("2p 죽음");
+        roundManager.p1winCnt += 1;
+        roundManager.RoundAdd();
     }
 }
