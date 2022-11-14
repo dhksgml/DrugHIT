@@ -33,9 +33,6 @@ public class InputManager : MonoBehaviour
         p1_text_UI.text = "1P 상태 : " + p1.state;
         p2_text_UI.text = "2P 상태 : " + p2.state;
 
-        Debug.Log("1p 체력: " + p1.curHP);
-        Debug.Log("2p 체력: " + p2.curHP);
-
         #region 누른 조작키 UI
         if (Input.GetKey(KeyCode.A)) { p1_press_UI.transform.GetChild(0).gameObject.SetActive(false); } else { p1_press_UI.transform.GetChild(0).gameObject.SetActive(true); }
         if (Input.GetKey(KeyCode.S)) { p1_press_UI.transform.GetChild(1).gameObject.SetActive(false); } else { p1_press_UI.transform.GetChild(1).gameObject.SetActive(true); }
@@ -56,7 +53,7 @@ public class InputManager : MonoBehaviour
 
 
         #region 플레이어1 조작
-        if (!(p1.state == State.hd_pose || p1.state == State.bd_pose || p1.state == State.ld_pose))
+        if (!p1.isDie && !(p1.state == State.hd_pose || p1.state == State.bd_pose || p1.state == State.ld_pose))
         {
 
             //뒤로 이동
@@ -213,7 +210,7 @@ public class InputManager : MonoBehaviour
 
         #region 플레이어2 조작
 
-        if (!(p2.state == State.hd_pose || p2.state == State.bd_pose || p2.state == State.ld_pose))
+        if (!p2.isDie && !(p2.state == State.hd_pose || p2.state == State.bd_pose || p2.state == State.ld_pose))
         {
 
             //뒤로 이동
