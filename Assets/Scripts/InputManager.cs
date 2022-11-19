@@ -27,6 +27,15 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     private GameObject p2_press_UI;
 
+    //맵 이동범위 제한
+    private Vector3 minPos;
+    private Vector3 maxPos;
+
+    private void Start()
+    {
+        minPos = new Vector3(-5,0,0);
+        maxPos = new Vector3(5, 0, 0);
+    }
 
     void Update()
     {
@@ -53,7 +62,7 @@ public class InputManager : MonoBehaviour
 
 
         #region 플레이어1 조작
-        if (!p1.isDie && !(p1.state == State.hd_pose || p1.state == State.bd_pose || p1.state == State.ld_pose))
+        if (!p1.isDie && !(p1.state == State.hd_pose || p1.state == State.bd_pose || p1.state == State.ld_pose || p1.state == State.win_pose))
         {
 
             //뒤로 이동
@@ -61,6 +70,10 @@ public class InputManager : MonoBehaviour
             {
                 //Debug.Log("A키 눌림");
                 p1.WalkBack(0);
+                if (p1.transform.position.x - 1.0f < minPos.x)
+                {
+                    p1.transform.position = minPos + new Vector3(1.0f, 0, 0);
+                }
             }
 
             //앞으로 이동
@@ -210,7 +223,7 @@ public class InputManager : MonoBehaviour
 
         #region 플레이어2 조작
 
-        if (!p2.isDie && !(p2.state == State.hd_pose || p2.state == State.bd_pose || p2.state == State.ld_pose))
+        if (!p2.isDie && !(p2.state == State.hd_pose || p2.state == State.bd_pose || p2.state == State.ld_pose || p2.state == State.win_pose))
         {
 
             //뒤로 이동
@@ -218,6 +231,10 @@ public class InputManager : MonoBehaviour
             {
                 //Debug.Log("왼쪽 키 눌림");
                 p2.WalkBack(1);
+                if (p2.transform.position.x + 1.0f > maxPos.x)
+                {
+                    p2.transform.position = maxPos - new Vector3(1.0f, 0, 0);
+                }
             }
 
             //앞으로 이동

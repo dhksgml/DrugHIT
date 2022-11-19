@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
 
     public bool isDie = false;
 
+    private RoundManager roundManager;
+
     private void Start()
     {
         head = transform.GetChild(1).GetComponent<BoxCollider>();
@@ -47,6 +49,8 @@ public class Player : MonoBehaviour
         leg = transform.GetChild(3).GetComponent<BoxCollider>();
 
         audioSource = this.GetComponent<AudioSource>();
+
+        roundManager = GameObject.Find("RoundManager").GetComponent<RoundManager>();
     }
 
     public bool GetCrouch()
@@ -87,7 +91,13 @@ public class Player : MonoBehaviour
         this.animator.SetBool("leftAtk", false);
         this.animator.SetBool("walkBack", false);
         this.animator.SetBool("walkFront", false);
-        
+
+        if(!isDie)
+        {
+            head.enabled = true;
+            body.enabled = true;
+            leg.enabled = true;
+        }
     }
     public void WalkBack(int PlayerNum)
     {
@@ -337,6 +347,20 @@ public class Player : MonoBehaviour
         animator.SetBool("walkFront", false);
     }
 
+    public void KnockDown()
+    {
+        isDie = true;
+        head.enabled = false;
+        body.enabled = false;
+        leg.enabled = false;
+
+        state = State.lose_pose;
+        animator.SetTrigger("die");
+
+        StopAllCoroutines();
+        StartCoroutine(GetUp());
+    }
+
     public void Die()
     {
         isDie = true;
@@ -348,13 +372,21 @@ public class Player : MonoBehaviour
         animator.SetTrigger("die");
     }
 
+    public void Win()
+    {
+        StopAllCoroutines();
+
+        state = State.win_pose;
+        animator.SetTrigger("win");
+    }
+
     public IEnumerator hsDamaged(float sec)
     {
         state = State.hd_pose;
         animator.SetTrigger("hsDamaged");
         yield return new WaitForSeconds(sec);
-        if(!isDie)
-            head.enabled = true;
+        //if(!isDie)
+        //    head.enabled = true;
         this.Idle();
     }
 
@@ -363,8 +395,8 @@ public class Player : MonoBehaviour
         state = State.hd_pose;
         animator.SetTrigger("hwDamaged");
         yield return new WaitForSeconds(sec);
-        if (!isDie)
-            head.enabled = true;
+        //if (!isDie)
+        //    head.enabled = true;
         this.Idle();
     }
 
@@ -373,8 +405,8 @@ public class Player : MonoBehaviour
         state = State.bd_pose;
         animator.SetTrigger("bDamaged");
         yield return new WaitForSeconds(sec);
-        if (!isDie)
-            body.enabled = true;
+        //if (!isDie)
+        //    body.enabled = true;
         this.Idle();
     }
 
@@ -383,8 +415,8 @@ public class Player : MonoBehaviour
         state = State.ld_pose;
         animator.SetTrigger("lDamaged");
         yield return new WaitForSeconds(sec);
-        if (!isDie)
-            leg.enabled = true;
+        //if (!isDie)
+        //    leg.enabled = true;
         this.Idle();
     }
 
@@ -401,6 +433,14 @@ public class Player : MonoBehaviour
         audioSource.Play();
         yield return new WaitForSeconds(1f);
         isBlock = false;
+        this.Idle();
+    }
+
+    IEnumerator GetUp()
+    {
+        yield return new WaitForSeconds(5f);
+        isDie = false;
+        animator.SetTrigger("getup");
         this.Idle();
     }
 }

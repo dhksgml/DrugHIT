@@ -14,11 +14,14 @@ public class HitCheck : MonoBehaviour
     [SerializeField]
     private GameObject counterEffect;
 
+    private RoundManager roundManager;
+
     private void Start()
     {
         hitManager = GameObject.Find("hitManager").GetComponent<HitManager>();
         p1 = GameObject.FindGameObjectWithTag("p1").GetComponent<Player1>();
         p2 = GameObject.FindGameObjectWithTag("p2").GetComponent<Player2>();
+        roundManager = GameObject.Find("RoundManager").GetComponent<RoundManager>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -214,8 +217,8 @@ public class HitCheck : MonoBehaviour
 
         if (p1.curHP <= 0 && p2.curHP <= 0)
         {
-            p1.Die();
-            p2.Die();
+            p1.KnockDown();
+            p2.KnockDown();
             Debug.Log("¹«½ÂºÎ");
 
             p1.curHP = p1.maxHP;
@@ -225,7 +228,13 @@ public class HitCheck : MonoBehaviour
         {
             if (p1.curHP <= 0)
             {
-                p1.Die();
+                if (roundManager.p2winCnt < 1)
+                    p1.KnockDown();
+                else
+                {
+                    p1.Die();
+                    p2.Win();
+                }
                 hitManager.DieP1();
                 hitManager.isDieP1 = false;
 
@@ -235,7 +244,14 @@ public class HitCheck : MonoBehaviour
 
             if (p2.curHP <= 0)
             {
-                p2.Die();
+                if (roundManager.p1winCnt < 1)
+                    p2.KnockDown();
+                else
+                {
+                    p2.Die();
+                    p1.Win();
+                }
+                
                 hitManager.DieP2();
                 hitManager.isDieP2 = false;
 
