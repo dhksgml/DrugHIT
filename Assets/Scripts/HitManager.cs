@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class HitManager : MonoBehaviour
 {
-    [SerializeField]
+    private GameObject player1Obj;
+    private GameObject player2Obj;
+
     private Player1 p1;
-    [SerializeField]
     private Player2 p2;
 
     [SerializeField]
@@ -22,6 +23,7 @@ public class HitManager : MonoBehaviour
     private AudioClip[] audioClips;
 
     private RoundManager roundManager;
+    private CameraManager cameraManager;
 
     public bool isHeadWeakHit1 = false;
     public bool isHeadStrongHit1 = false;
@@ -44,10 +46,32 @@ public class HitManager : MonoBehaviour
     private void Start()
     {
         roundManager = GameObject.Find("RoundManager").GetComponent<RoundManager>();
+        cameraManager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraManager>();
+        player1Obj = GameObject.FindGameObjectWithTag("p1");
+        player2Obj = GameObject.FindGameObjectWithTag("p2");
+        p1 = player1Obj.GetComponent<Player1>();
+        p2 = player2Obj.GetComponent<Player2>();
     }
 
     private void Update()
     {
+        //카메라 흔들리는 효과
+        if (isHeadWeakHit1 || isHeadStrongHit1 || isBodyHit1 || isLegHit1 || isHeadWeakHit2 || isHeadStrongHit2 || isBodyHit2 || isLegHit2)
+            ShakeCamera.Instance.OnShakeCamera(0.1f, 1f);
+
+        //카메라 슬로우 및 줌인 효과
+        if ((p1.curHP <= 10 && p2.curHP <= 10) && (Vector3.Distance(player2Obj.transform.position, player1Obj.transform.position) <= 3) && (p1.isAtk && p2.isAtk))
+        {
+            Time.timeScale = 0.1f;
+            cameraManager.minDistance = 4.0f;
+        }
+        else
+        {
+            Time.timeScale = 1.0f;
+            cameraManager.minDistance = 5.0f;
+        }
+            
+
         if (isHeadWeakHit2)
         {
             //Debug.Log("2p 약하게 머리 맞음");
