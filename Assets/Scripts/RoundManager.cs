@@ -14,7 +14,9 @@ public class RoundManager : MonoBehaviour
     [SerializeField]
     private GameObject pauseUI;
     [SerializeField]
-    private GameObject pauseBtn;
+    private GameObject pauseBtn1;
+    [SerializeField]
+    private GameObject pauseBtn2;
     [SerializeField]
     private GameObject roundTxt;
 
@@ -23,18 +25,21 @@ public class RoundManager : MonoBehaviour
     [SerializeField]
     private GameObject[] p2winCntUI;
 
-    private bool isPause = false;
+    public bool isPause = false;
 
     public int p1winCnt = 0;
     public int p2winCnt = 0;
 
+    private SceneScript sceneScript;
+    private bool flag = false;
 
     //private HitManager hitManager;
     private void Start()
     {
         //hitManager = GameObject.Find("hitManager").GetComponent<HitManager>();
+        roundCnt = 1;
 
-        foreach(GameObject i in p1winCntUI)
+        foreach (GameObject i in p1winCntUI)
         {
             i.SetActive(false);
         }
@@ -43,6 +48,8 @@ public class RoundManager : MonoBehaviour
         {
             i.SetActive(false);
         }
+
+        sceneScript = this.gameObject.GetComponent<SceneScript>();
     }
     public void Pause()
     {
@@ -67,7 +74,8 @@ public class RoundManager : MonoBehaviour
     {
         pauseBackgroundUI.SetActive(isPause);
         pauseUI.SetActive(isPause);
-        pauseBtn.SetActive(isPause);
+        pauseBtn1.SetActive(isPause);
+        pauseBtn2.SetActive(isPause);
 
         roundTxt.GetComponent<Text>().text = "Round " + roundCnt;
 
@@ -90,5 +98,20 @@ public class RoundManager : MonoBehaviour
         {
             p2winCntUI[1].SetActive(true);
         }
+
+        if (p1winCnt == 2 || p2winCnt == 2)
+        {
+            if(flag == false)
+            {
+                StartCoroutine( ChangeFlag() );
+            }
+        }
+    }
+
+    IEnumerator ChangeFlag()
+    {
+        flag = true;
+        yield return new WaitForSeconds(3.0f);
+        sceneScript.loadScene(0);
     }
 }
