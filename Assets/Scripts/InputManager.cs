@@ -12,12 +12,12 @@ public class InputManager : MonoBehaviour
     private Player2 p2;
 
     //1p 상태 확인용 UI
-    [SerializeField]
-    private Text p1_text_UI;
+    //[SerializeField]
+    //private Text p1_text_UI;
 
     //2p 상태 확인용 UI
-    [SerializeField]
-    private Text p2_text_UI;
+    //[SerializeField]
+    //private Text p2_text_UI;
 
     //1p 키 확인용 UI
     [SerializeField]
@@ -31,16 +31,19 @@ public class InputManager : MonoBehaviour
     private Vector3 minPos;
     private Vector3 maxPos;
 
+    private RoundManager roundManager;
+
     private void Start()
     {
         minPos = new Vector3(-5,0,0);
         maxPos = new Vector3(5, 0, 0);
+        roundManager = GameObject.Find("RoundManager").GetComponent<RoundManager>();
     }
 
     void Update()
     {
-        p1_text_UI.text = "1P 상태 : " + p1.state;
-        p2_text_UI.text = "2P 상태 : " + p2.state;
+        //p1_text_UI.text = "1P 상태 : " + p1.state;
+        //p2_text_UI.text = "2P 상태 : " + p2.state;
 
         #region 누른 조작키 UI
         if (Input.GetKey(KeyCode.A)) { p1_press_UI.transform.GetChild(0).gameObject.SetActive(false); } else { p1_press_UI.transform.GetChild(0).gameObject.SetActive(true); }
@@ -62,6 +65,8 @@ public class InputManager : MonoBehaviour
 
 
         #region 플레이어1 조작
+
+        if(!roundManager.isPause)
         if (!p1.isDie && !(p1.state == State.hd_pose || p1.state == State.bd_pose || p1.state == State.ld_pose || p1.state == State.win_pose))
         {
 
@@ -223,6 +228,7 @@ public class InputManager : MonoBehaviour
 
         #region 플레이어2 조작
 
+        if(!roundManager.isPause)
         if (!p2.isDie && !(p2.state == State.hd_pose || p2.state == State.bd_pose || p2.state == State.ld_pose || p2.state == State.win_pose))
         {
 

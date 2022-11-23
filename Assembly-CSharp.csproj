@@ -72,8 +72,9 @@
     <Compile Include="Assets\Scripts\Player1.cs" />
     <Compile Include="Assets\SciFi Warehouse Kit\Demo\Scripts\PushPhysics.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\SciFi Warehouse Kit\Demo\Scripts\MouseComponent.cs" />
     <Compile Include="Assets\Scripts\ShakeCamera.cs" />
+    <Compile Include="Assets\SciFi Warehouse Kit\Demo\Scripts\MouseComponent.cs" />
+    <Compile Include="Assets\Scripts\SceneScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

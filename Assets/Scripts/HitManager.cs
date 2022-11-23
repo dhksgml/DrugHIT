@@ -65,7 +65,7 @@ public class HitManager : MonoBehaviour
             Time.timeScale = 0.1f;
             cameraManager.minDistance = 4.0f;
         }
-        else
+        else if(!roundManager.isPause)
         {
             Time.timeScale = 1.0f;
             cameraManager.minDistance = 5.0f;
