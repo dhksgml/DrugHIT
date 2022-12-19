@@ -261,4 +261,11 @@ public class HitCheck : MonoBehaviour
         }
     }
 
+
+    public IEnumerator FillHP()
+    {
+        yield return new WaitForSeconds(1f);
+        p1.curHP = p1.maxHP;
+        p2.curHP = p2.maxHP;
+    }
 }

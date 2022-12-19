@@ -11,11 +11,11 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     private Player2 p2;
 
-    //1p 상태 확인용 UI
+    ////1p 상태 확인용 UI
     //[SerializeField]
     //private Text p1_text_UI;
 
-    //2p 상태 확인용 UI
+    ////2p 상태 확인용 UI
     //[SerializeField]
     //private Text p2_text_UI;
 

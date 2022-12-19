@@ -147,8 +147,15 @@ public class HitManager : MonoBehaviour
             StartCoroutine(p1.lDamaged(legHitDelay));
         }
 
-        p1Hpbar.value = p1.curHP;
-        p2Hpbar.value = p2.curHP;
+        if(!p1.isDie)
+            p1Hpbar.value = p1.curHP;
+        else
+            p1Hpbar.value = 0;
+
+        if (!p2.isDie)
+            p2Hpbar.value = p2.curHP;
+        else
+            p2Hpbar.value = 0;
     }
 
     public void DieP1()
