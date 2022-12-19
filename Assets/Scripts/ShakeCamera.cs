@@ -20,11 +20,11 @@ public class ShakeCamera : MonoBehaviour
         this.shakeTime = shakeTime;
         this.shakeIntensity = shakeIntensity;
 
-        StopCoroutine("ShakeByPosition");
-        StartCoroutine("ShakeByPosition");
-
         StopCoroutine("ShakeByRotation");
         StartCoroutine("ShakeByRotation");
+
+        StopCoroutine("ShakeByPosition");
+        StartCoroutine("ShakeByPosition");
     }
     
     private IEnumerator ShakeByPosition()

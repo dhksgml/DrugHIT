@@ -101,6 +101,7 @@ public class RoundManager : MonoBehaviour
 
         if (p1winCnt == 2 || p2winCnt == 2)
         {
+            //승패 정해지고 일정 시간 후 시작화면으로 넘어감.
             if(flag == false)
             {
                 StartCoroutine( ChangeFlag() );

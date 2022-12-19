@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
 
         roundManager = GameObject.Find("RoundManager").GetComponent<RoundManager>();
+
     }
 
     public bool GetCrouch()
@@ -84,6 +85,7 @@ public class Player : MonoBehaviour
         isUpper = false;
         isCrouch = false;
         isBlock = false;
+        isAtk = false;
         state = State.idle;
         atkPower = 0;
 
@@ -330,7 +332,7 @@ public class Player : MonoBehaviour
             audioSource.clip = audioClips[1];
 
             StopAllCoroutines();
-            StartCoroutine(DoAttack(0.3f));
+            StartCoroutine(DoAttack(0.4f));
         }
     }
 
@@ -355,6 +357,7 @@ public class Player : MonoBehaviour
         leg.enabled = false;
 
         state = State.lose_pose;
+        animator.StopPlayback();
         animator.SetTrigger("die");
 
         StopAllCoroutines();
@@ -368,7 +371,10 @@ public class Player : MonoBehaviour
         body.enabled = false;
         leg.enabled = false;
 
+        StopAllCoroutines();
+        animator.StopPlayback();
         state = State.lose_pose;
+        
         animator.SetTrigger("die");
     }
 
@@ -424,7 +430,8 @@ public class Player : MonoBehaviour
     {
         audioSource.Play();
         yield return new WaitForSeconds(sec);
-        isAtk = false;
+        //Debug.Log(sec);
+        //isAtk = false;
         this.Idle();
     }
 
@@ -432,7 +439,7 @@ public class Player : MonoBehaviour
     {
         audioSource.Play();
         yield return new WaitForSeconds(1f);
-        isBlock = false;
+        //isBlock = false;
         this.Idle();
     }
 
@@ -440,6 +447,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         isDie = false;
+
         animator.SetTrigger("getup");
         this.Idle();
     }
